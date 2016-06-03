@@ -36,8 +36,8 @@ make sure Sqlite is running).
 
 ## Quick Start
 ```
-  git clone https://github.com/Cognilytics/todoapp.git
-  cd todoapp
+  git clone https://github.com/Cognilytics/todoChallenge.git
+  cd todoChallenge
   <create and use virtualenv if desired>
   pip install -r requirements.txt
   python server.py
