@@ -33,12 +33,20 @@ make sure Sqlite is running).
 
 * Sqlite
 * Python 3
+* Virtualenv (http://docs.python-guide.org/en/latest/dev/virtualenvs/)
 
 ## Quick Start
 ```
+  < open directory you want to run from >
+  cd dev
+
+  < create and use virtualenv for python 3 >
+  virtualenv -p <PATH_TO_PYTHON3> todoVenv
+  source todoVenv/bin/activate
+
+  < get code and run >
   git clone https://github.com/Cognilytics/todoChallenge.git
   cd todoChallenge
-  <create and use virtualenv if desired>
   pip install -r requirements.txt
   python server.py
 ```
