@@ -80,3 +80,21 @@ A few important files to know about:
 ├── test.db							< SQLite Database >
 └── server.py						< Flask Main File >
 ```
+
+## Notes
+
+### Storage Service
+
+/static/scripts/services/todoStorage.js was written by the todomvc.com authors to used in two ways: local or remote.
+The beginning of that script looks to see if it can access api endpoint /api/todos and if it can, it then says
+'Hey, looks like we have a server behind this.  Lets use it.'  It then returns the 'api' factory.  If it doesn't find
+anything at /api/todos then it says 'Bummer, no server.  I will use local storage instead.'  It then returns the
+localStorage factory.  This is all invisible to the controller.  It just knows it has some kind of storage behind it.
+Since we have a server (flask) behind this, you can focus on the api factory.
+
+### Angular Resource
+
+If you are unfamiliar with Angular and its Resource Provider, you will want to look at this page:
+https://docs.angularjs.org/api/ngResource/service/$resource.  It will help you see how angular is mapping
+functions like get(), save(), etc to GET, POST and so on.  You will also then see our app has defined
+'update' to map to PUT as Resource does not have a default PUT method defined.
