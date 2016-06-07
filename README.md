@@ -58,12 +58,12 @@ A few important files to know about:
 
 ```
 ├── api.py							< Flask Restful Api File >
-├── bower.json						< Bower File >
+├── bower.json						< Bower File for Vendor JS >
 ├── config.py						< Flask configuration file >
 ├── models.py						< SQLAlchemy Models >
 ├── requirements.txt				< Python Requirements File >
 ├── static							< Static Folder >
-│   ├── lib								< Bower Libraries >
+│   ├── lib								< Vendor Libraries >
 │   ├── scripts							< Angular Stuff >
 │   │   ├── app.js
 │   │   ├── controllers						< Angular Controllers >
@@ -75,7 +75,7 @@ A few important files to know about:
 │   │       └── todoStorage.js
 │   └── styles							< CSS Stuff >
 │       └── main.css
-├── templates							< Flask Rendered Templates >
+├── templates							< Flask and Angular HTML Templates >
 │   └── index.html						
 ├── test.db							< SQLite Database >
 └── server.py						< Flask Main File >
@@ -85,7 +85,7 @@ A few important files to know about:
 
 ### Storage Service
 
-/static/scripts/services/todoStorage.js was written by the todomvc.com authors to used in two ways: local or remote.
+/static/scripts/services/todoStorage.js was written by the todomvc.com authors to be used in two ways: local or remote.
 The beginning of that script looks to see if it can access api endpoint /api/todos and if it can, it then says
 'Hey, looks like we have a server behind this.  Lets use it.'  It then returns the 'api' factory.  If it doesn't find
 anything at /api/todos then it says 'Bummer, no server.  I will use local storage instead.'  It then returns the
