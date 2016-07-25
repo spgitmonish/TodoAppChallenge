@@ -5,6 +5,11 @@
  * - retrieves and persists the model via the todoStorage service
  * - exposes the model to the template and provides event handlers
  */
+// Flag for debug, set this to true to see console.log() debug messages in
+// the console window of the browser
+
+var DEBUG = 1;
+
 angular.module('todomvc')
 	.controller('TodoCtrl', function TodoCtrl($scope, $routeParams, $filter, store) {
 		'use strict';
@@ -95,6 +100,23 @@ angular.module('todomvc')
 		$scope.removeTodo = function (todo) {
 			store.delete(todo);
 		};
+
+		$scope.cloneTodo = function (todo) {
+			if(DEBUG)
+			{
+				console.log(todo);
+			}
+
+			// Clone the original todo.
+			var clonedTodo = angular.extend({}, todo);
+
+			// Insert as a new todo entry
+			$scope.saving = true;
+			store.insert(clonedTodo)
+				.finally(function () {
+					$scope.saving = false;
+				});
+		}
 
 		$scope.saveTodo = function (todo) {
 			store.put(todo);
