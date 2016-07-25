@@ -8,7 +8,7 @@
 // Flag for debug, set this to true to see console.log() debug messages in
 // the console window of the browser
 
-var DEBUG = 1;
+var DEBUG = 0;
 
 angular.module('todomvc')
 	.controller('TodoCtrl', function TodoCtrl($scope, $routeParams, $filter, store) {
