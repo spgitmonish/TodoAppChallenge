@@ -8,6 +8,25 @@
  * model.
  */
 angular.module('todomvc')
+	.factory('findTodoWithId', function() {
+		'use strict';
+
+		var findTodoWithId = {
+			getIndex: function(objectArray, id){
+				for(var index = 0; index < objectArray.length; index += 1) {
+					if(objectArray[index].id === id) {
+					  return index;
+					}
+				}
+
+				// Return -1 if no element was found
+				return -1;
+			}
+		};
+
+		return findTodoWithId;
+	})
+
 	.factory('todoStorage', function ($http, $injector) {
 		'use strict';
 
@@ -21,7 +40,7 @@ angular.module('todomvc')
 			});
 	})
 
-	.factory('api', function ($resource) {
+	.factory('api', function($resource) {
 		'use strict';
 
 		var store = {
@@ -29,7 +48,8 @@ angular.module('todomvc')
 
 			api: $resource('/api/todos/:id', null,
 				{
-					update: { method:'PUT' }
+					update: { method:'PUT' },
+					clone: { method:'POST' }
 				}
 			),
 
@@ -65,6 +85,11 @@ angular.module('todomvc')
 				});
 			},
 
+			getTodo: function (todoid) {
+				return store.api.get({ id: todoid })
+				.$promise;
+			},
+
 			insert: function (todo) {
 				var originalTodos = store.todos.slice(0);
 
@@ -74,6 +99,18 @@ angular.module('todomvc')
 						store.todos.push(todo);
 					}, function error() {
 						angular.copy(originalTodos, store.todos);
+					})
+					.$promise;
+			},
+
+			copy: function(todo){
+				// Clone the todo
+				return store.api.clone(todo,
+					function success(resp) {
+						todo.id = resp.id;
+						store.todos.push(todo);
+					}, function error() {
+						angular.copy(todo, store.todos);
 					})
 					.$promise;
 			},

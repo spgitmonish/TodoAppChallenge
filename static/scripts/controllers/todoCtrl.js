@@ -104,17 +104,35 @@ angular.module('todomvc')
 		$scope.cloneTodo = function (todo) {
 			if(DEBUG)
 			{
-				console.log(todo);
+				console.log("todo to clone", todo);
 			}
 
-			// Clone the original todo.
-			var clonedTodo = angular.extend({}, todo);
+			// Get the todo to clone using the id
+			store.getTodo(todo.id).then(function(todoToClone){
+				var clonedTodo = todoToClone;
 
-			// Insert as a new todo entry
-			$scope.saving = true;
-			store.insert(clonedTodo)
-				.finally(function () {
-					$scope.saving = false;
+				// Copy the status of 'done' field because by default a new entry will
+				// have the 'done' field set to false
+				var done = todoToClone.done;
+
+				// Insert as a new todo entry using the clone API
+				$scope.saving = true;
+				store.copy(todoToClone)
+					.then(function (clonedTodo) {
+						if(DEBUG)
+						{
+							console.log("cloned todo", clonedTodo);
+						}
+
+						clonedTodo.done = done;
+
+						// Update the entry with correct 'done' value
+						store.put(clonedTodo).then(function success() {
+								$scope.saving = false;
+							}, function error() {
+								clonedTodo.done = !clonedTodo.done;
+							});
+					});
 				});
 		}
 
